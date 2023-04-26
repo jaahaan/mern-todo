@@ -12,7 +12,7 @@ const requireAuth = async (req, res, next) => {
   const token = authorization.split(" ")[1];
 
   try {
-    console.log(process.env.JWT_SECRET);
+    // console.log(process.env.JWT_SECRET);
     const a = jwt.verify(token, process.env.JWT_SECRET);
     // console.log(a);
     req.user = a.id;

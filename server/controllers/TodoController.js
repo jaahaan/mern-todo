@@ -1,6 +1,7 @@
 const { models } = require("mongoose");
 const TodoModel = require("../models/TodoModel");
 
+/** get auth user upcomming todo */
 module.exports.getTodo = async (req, res) => {
   const user_id = req.user;
   const todo = await TodoModel.find({
@@ -11,12 +12,14 @@ module.exports.getTodo = async (req, res) => {
   res.send(todo);
 };
 
+/** get auth user completed todo */
 module.exports.getCompletedTodos = async (req, res) => {
   const user_id = req.user;
   const ctodo = await TodoModel.find({ isCompleted: true, user_id: user_id });
   res.send(ctodo);
 };
 
+/** create new todo */
 module.exports.saveTodo = async (req, res) => {
   const { text } = req.body;
   try {
@@ -28,6 +31,7 @@ module.exports.saveTodo = async (req, res) => {
   }
 };
 
+/** update todo */
 module.exports.updateTodo = async (req, res) => {
   const { _id, text } = req.body;
   TodoModel.findByIdAndUpdate(_id, { text })
@@ -35,6 +39,7 @@ module.exports.updateTodo = async (req, res) => {
     .catch((err) => console.log(err));
 };
 
+/** mark todo as completed */
 module.exports.markCompleted = async (req, res) => {
   const { _id, isCompleted } = req.body;
   TodoModel.findByIdAndUpdate(_id, { isCompleted })
@@ -42,6 +47,7 @@ module.exports.markCompleted = async (req, res) => {
     .catch((err) => console.log(err));
 };
 
+/** delete todo */
 module.exports.deleteTodo = async (req, res) => {
   const { _id } = req.body;
   TodoModel.findByIdAndDelete(_id)
