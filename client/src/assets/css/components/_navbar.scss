@@ -1,0 +1,126 @@
+// Add variables here
+@use "../abstracts/variables" as *;
+@use "../abstracts/mixins" as *;
+
+// Overrides Bootstrap
+
+// Overrides Bootstrap
+
+.nav-link {
+  padding: 0;
+}
+.navbar-expand-lg .navbar-nav .nav-link {
+  padding: 0;
+}
+.dropdown-item:focus,
+.dropdown-item:hover {
+  background-color: transparent;
+}
+.navbar-brand img {
+  width: 115px;
+  vertical-align: baseline !important;
+}
+
+// Style Nav
+.navbar {
+  height: var(--nav-height);
+  background-color: $nav-bar-background;
+  border-bottom: 1px solid $wash;
+  &-brand {
+    margin-left: 20px;
+    padding: 5px 10px;
+    &:hover {
+      color: $secondary-text;
+    }
+  }
+  span {
+    color: $primary-text;
+    margin-right: 10px;
+  }
+  a {
+    color: $primary-text;
+    &:not(.navbar-brand) {
+      padding: 10px 15px;
+    }
+    border-radius: 10px;
+    &:hover {
+      background-color: $wash;
+      color: $primary-text;
+    }
+    &:active {
+      color: $link;
+    }
+  }
+  button {
+    color: $primary-text;
+    padding: 10px 15px;
+    border-radius: 10px;
+    border: none;
+    &:hover {
+      background-color: $wash;
+      // color: $primary-text;
+    }
+  }
+  .item {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    margin-right: 20px;
+  }
+}
+
+// Responsive
+@include breakpoint-max(1199px) {
+  .navbar.navbar-expand-lg .nav-item {
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+}
+@include breakpoint-max(767px) {
+  .navbar {
+    &.navbar-expand-lg {
+      padding-top: 10px;
+      padding-bottom: 10px;
+      .header-content {
+        .navbar-itemLogo {
+          .navbar-brand {
+            img {
+              max-width: 175px;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+@include breakpoint-max(575px) {
+  .navbar {
+    &-brand img {
+      vertical-align: 0px;
+    }
+    &.navbar-expand-lg {
+      .header-content {
+        .navbar-itemLogo {
+          .navbar-brand {
+            img {
+              max-width: 130px;
+            }
+          }
+        }
+        .navbar-item {
+          &__action {
+            li {
+              font-size: 15px;
+              i {
+                svg {
+                  width: 20px;
+                  height: 20px;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

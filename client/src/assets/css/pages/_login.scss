@@ -1,0 +1,83 @@
+@use "../abstracts/variables" as *;
+
+.box {
+  // background: rgba(255, 255, 255, 0.55);
+  background-color: #242526;
+  border-radius: 14px;
+  backdrop-filter: blur(7.1px);
+  padding: 1rem 1.75rem;
+  min-width: 400px;
+}
+.profile {
+  &_img {
+    border: 4px solid gray;
+    width: 135px;
+    height: 135px;
+    border-radius: 50%;
+    cursor: pointer;
+    &:hover {
+      border: 4px solid $link;
+    }
+  }
+}
+.title {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  h4 {
+    font-size: 30px;
+    // font-weight: bold;
+    color: $primary-text;
+    margin-bottom: 0.75rem;
+  }
+  span {
+    color: $secondary-text;
+  }
+  a {
+    color: $link;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+.input_box {
+  label {
+    color: $secondary-text;
+    text-align: center;
+    margin-bottom: 0.5rem;
+    font-size: 18px;
+  }
+  input {
+    border-radius: 20px;
+    padding: 8px 15px;
+    margin-bottom: 10px;
+    background-color: $input-background;
+    color: $primary-text;
+    width: 100%;
+
+    &::placeholder {
+      color: $placeholder-text;
+    }
+  }
+  button {
+    border-radius: 20px;
+    padding: 8px 12px;
+    margin-bottom: 10px;
+    background-color: $web-wash;
+    text-align: center;
+    color: $placeholder-text;
+    width: 100%;
+    &:hover {
+      color: $primary-text;
+      background-color: $link;
+    }
+    .btn_active {
+      color: $primary-text;
+      background-color: $link;
+    }
+  }
+}
+
+input[type="file"] {
+  display: none;
+}

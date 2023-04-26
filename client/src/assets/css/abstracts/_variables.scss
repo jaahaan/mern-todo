@@ -1,0 +1,69 @@
+// Add variables here
+@use "./mixins" as *;
+
+:root {
+  --nav-height: 60px;
+
+  // @include breakpoint-max(767px) {
+  //   --nav-height: 60px;
+  // }
+}
+
+// $titleRed: #bc5d5d;
+// $inverseColor: #ffffff;
+// $colorWhite: #ffffff;
+
+// $primaryColor: #566d7e;
+// $headerBg: #78909c;
+// $secondaryColor: #566d7e;
+// $btnHover: #566d7e;
+// $linkActive: #c3d136;
+
+// $secondaryColor: #81d4fa;
+// $btnHover: #81d4fa;
+// $linkActive: #81d4fa;
+
+// $primaryColor: #7da2a9;
+// $headerBg: #a3babe;
+// $secondaryColor: #7da2a9;
+// $btnHover: #6aa5b1;
+// $linkActive: #3d3b3b;
+// $linkHover: #3d3b3b;
+// $linkColor: #ffffff;
+// $link: #58a6ff;
+// $grayColor: #3a3a3a;
+// $borderColor: #e4e6eb;
+// $gray: #3d3b3b;
+// $bgWhite: #ffffff;
+// $info: #76cbd6;
+// $btnHover: #5a606d;
+// $random: #444253;
+// $hover: #cdcdcd;
+// $upVote: #4caf50;
+// $downVote: #ed2939;
+
+$secondary-icon: #b0b3b8;
+$secondary-text: #b0b3b8;
+$secondary-icon: #65676b;
+$secondary-text: #b0b3b8;
+$wash: #3e4042;
+$web-wash: #18191a;
+$notification-badge: #e41e3f;
+
+$primary-icon: #e4e6eb;
+$primary-text: #e4e6eb;
+$input-background: #3a3b3c;
+$accent: #1876f2;
+$link: #58a6ff;
+
+$placeholder-text: #8a8d91;
+$card: #242526;
+$nav-bar-background: #242526;
+$nav-bar-background-gradient: linear-gradient(
+  to top,
+  #242526,
+  rgba(36, 37, 38, 0.9),
+  rgba(36, 37, 38, 0.7),
+  rgba(36, 37, 38, 0.4),
+  rgba(36, 37, 38, 0)
+);
