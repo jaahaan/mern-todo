@@ -58,7 +58,7 @@ function Home() {
         { text },
         {
           headers: {
-            "Content-Type": "application/json",
+            "Content-Type": "*",
             Authorization: `Bearer ${user.token}`,
           },
         }
@@ -104,6 +104,7 @@ function Home() {
         { _id: todoId, text },
         {
           headers: {
+            "Content-Type": "*",
             Authorization: `Bearer ${user.token}`,
           },
         }
@@ -132,6 +133,7 @@ function Home() {
         { _id, isCompleted },
         {
           headers: {
+            "Content-Type": "*",
             Authorization: `Bearer ${user.token}`,
           },
         }
@@ -168,6 +170,7 @@ function Home() {
         { _id },
         {
           headers: {
+            "Content-Type": "*",
             Authorization: `Bearer ${user.token}`,
           },
         }
