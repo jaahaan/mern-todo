@@ -43,7 +43,7 @@ const Register = () => {
                 isLoading={isLoading}
                 disabled={isLoading}
               >
-                Reister
+                Register
               </Button>
           </div>
           <div className="title">

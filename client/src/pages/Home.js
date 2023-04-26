@@ -16,7 +16,7 @@ import axios from "axios";
 import { useEffect, useRef, useState } from "react";
 import Todo from "../components/Todo";
 import { useAuthContext } from "../hooks/useAuthContext";
-
+import { getAllTodo, getCompletedTodo } from "../utils/HandleApi";
 function Home() {
   const [todo, setTodo] = useState([]);
   const [completedTodo, setCompletedTodo] = useState([]);
@@ -27,72 +27,17 @@ function Home() {
   const { user } = useAuthContext();
   const toast = useToast();
   const baseUrl = "https://mern-todo-s3kz.onrender.com";
-  // const baseUrl =  "http://localhost:5000"
-
+  // const baseUrl = "http://localhost:5000";
+  const token = user.token;
   const inputReference = useRef(null);
 
   useEffect(() => {
-    const getAllTodo = async () => {
-      const response = await fetch(`${baseUrl}/api/todos`, {
-        headers: {
-          Authorization: `Bearer ${user.token}`,
-        },
-      });
-      const json = await response.json();
-
-      if (response.ok) {
-        setTodo(json);
-        setLoadingTodo(false);
-      }
-    };
-    const getCompletedTodo = async () => {
-      const response = await fetch(`${baseUrl}/api/todos/completed_todos`, {
-        headers: {
-          Authorization: `Bearer ${user.token}`,
-        },
-      });
-      const json = await response.json();
-
-      if (response.ok) {
-        setCompletedTodo(json);
-        setLoadingTodo(false);
-      }
-    };
     if (user) {
-      getAllTodo();
-      getCompletedTodo();
+      setLoadingTodo(true);
+      getAllTodo(token, setTodo, setLoadingTodo);
+      getCompletedTodo(token, setCompletedTodo);
     }
   }, [user]);
-
-  /** Get All Tasks */
-  const getAllTodo = async () => {
-    const response = await fetch(`${baseUrl}/api/todos`, {
-      headers: {
-        Authorization: `Bearer ${user.token}`,
-      },
-    });
-    const json = await response.json();
-
-    if (response.ok) {
-      setTodo(json);
-      setLoadingTodo(false);
-    }
-  };
-
-  /** Get Completed Tasks */
-  const getCompletedTodo = async () => {
-    const response = await fetch(`${baseUrl}/api/todos/completed_todos`, {
-      headers: {
-        Authorization: `Bearer ${user.token}`,
-      },
-    });
-    const json = await response.json();
-
-    if (response.ok) {
-      setCompletedTodo(json);
-      setLoadingTodo(false);
-    }
-  };
 
   /** Add new Task */
   const addHandler = async () => {
@@ -107,28 +52,29 @@ function Home() {
       });
       return;
     }
-
-    const response = await fetch(`${baseUrl}/api/todos`, {
-      method: "POST",
-      body: JSON.stringify({ text }),
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${user.token}`,
-      },
-    });
-    // const json = await response.json();
-
-    if (response.ok) {
-      setText("");
-      getAllTodo(setTodo, setLoadingTodo);
-      toast({
-        title: "Task Added!!!",
-        status: "success",
-        duration: 5000,
-        isClosable: true,
-        position: "top",
-      });
-    }
+    axios
+      .post(
+        `${baseUrl}/api/todos`,
+        { text },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${user.token}`,
+          },
+        }
+      )
+      .then((data) => {
+        setText("");
+        getAllTodo(token, setTodo, setLoadingTodo);
+        toast({
+          title: "Task Added!!!",
+          status: "success",
+          duration: 5000,
+          isClosable: true,
+          position: "top",
+        });
+      })
+      .catch((err) => console.log(err));
   };
 
   /** Set the task to be updated */
@@ -165,8 +111,8 @@ function Home() {
       .then((data) => {
         setText("");
         setIsUpdating(false);
-        getAllTodo(setTodo, setLoadingTodo);
-        getCompletedTodo(setCompletedTodo);
+        getAllTodo(token, setTodo, setLoadingTodo);
+        getCompletedTodo(token, setCompletedTodo);
         toast({
           title: "Task Updated!!!",
           status: "success",
@@ -191,8 +137,8 @@ function Home() {
         }
       )
       .then((data) => {
-        getCompletedTodo(setCompletedTodo);
-        getAllTodo(setTodo, setLoadingTodo);
+        getAllTodo(token, setTodo, setLoadingTodo);
+        getCompletedTodo(token, setCompletedTodo);
         if (isCompleted === true) {
           toast({
             title: "Task Completed!!!",
@@ -227,8 +173,8 @@ function Home() {
         }
       )
       .then((data) => {
-        getAllTodo(setTodo, setLoadingTodo);
-        getCompletedTodo(setCompletedTodo);
+        getAllTodo(token, setTodo, setLoadingTodo);
+        getCompletedTodo(token, setCompletedTodo);
         toast({
           title: "Task Deleted!!!",
           status: "error",
@@ -251,9 +197,9 @@ function Home() {
     <VStack spacing="10px" className="container">
       <Container maxW="xl" centerContent>
         <Text fontSize="3xl" mt={5} color="#58a6ff">
-          Hello {user.user.username}!!!
+          {/* Hello {user.user.username}!!! */}
         </Text>
-        
+
         <Box
           d="flex"
           justifyContent="center"
