@@ -4,6 +4,10 @@ const todoSchema = new mongoose.Schema({
         type: String,
         require: true,
     },
+    user_id: {
+        type: String,
+        require: true,
+    },
     isCompleted: {
         type: Boolean,
         required: true,
