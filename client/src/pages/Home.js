@@ -26,12 +26,14 @@ function Home() {
   const [loadingTodo, setLoadingTodo] = useState(true);
   const { user } = useAuthContext();
   const toast = useToast();
-  // const baseUrl = "stellular-moonbeam-67987e.netlify.app/";
+  const baseUrl = "https://mern-todo-s3kz.onrender.com";
+  // const baseUrl =  "http://localhost:5000"
+
   const inputReference = useRef(null);
 
   useEffect(() => {
     const getAllTodo = async () => {
-      const response = await fetch(`/api/todos`, {
+      const response = await fetch(`${baseUrl}/api/todos`, {
         headers: {
           Authorization: `Bearer ${user.token}`,
         },
@@ -44,7 +46,7 @@ function Home() {
       }
     };
     const getCompletedTodo = async () => {
-      const response = await fetch(`/api/todos/completed_todos`, {
+      const response = await fetch(`${baseUrl}/api/todos/completed_todos`, {
         headers: {
           Authorization: `Bearer ${user.token}`,
         },
@@ -64,7 +66,7 @@ function Home() {
 
   /** Get All Tasks */
   const getAllTodo = async () => {
-    const response = await fetch(`/api/todos`, {
+    const response = await fetch(`${baseUrl}/api/todos`, {
       headers: {
         Authorization: `Bearer ${user.token}`,
       },
@@ -79,7 +81,7 @@ function Home() {
 
   /** Get Completed Tasks */
   const getCompletedTodo = async () => {
-    const response = await fetch(`/api/todos/completed_todos`, {
+    const response = await fetch(`${baseUrl}/api/todos/completed_todos`, {
       headers: {
         Authorization: `Bearer ${user.token}`,
       },
@@ -106,7 +108,7 @@ function Home() {
       return;
     }
 
-    const response = await fetch(`/api/todos`, {
+    const response = await fetch(`${baseUrl}/api/todos`, {
       method: "POST",
       body: JSON.stringify({ text }),
       headers: {
@@ -152,7 +154,7 @@ function Home() {
 
     axios
       .post(
-        `/api/todos/update`,
+        `${baseUrl}/api/todos/update`,
         { _id: todoId, text },
         {
           headers: {
@@ -180,7 +182,7 @@ function Home() {
   const handleCheck = (_id, isCompleted, setTodo, setCompletedTodo) => {
     axios
       .post(
-        `/api/todos/mark_completed`,
+        `${baseUrl}/api/todos/mark_completed`,
         { _id, isCompleted },
         {
           headers: {
@@ -216,7 +218,7 @@ function Home() {
   const handleDelete = (_id, setTodo) => {
     axios
       .post(
-        `/api/todos/delete`,
+        `${baseUrl}/api/todos/delete`,
         { _id },
         {
           headers: {
