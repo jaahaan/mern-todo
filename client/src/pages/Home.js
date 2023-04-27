@@ -58,8 +58,10 @@ function Home() {
         { text },
         {
           headers: {
-            "Content-Type": "*",
-            Authorization: `Bearer ${user.token}`,
+            "Access-Control-Allow-Origin": "*",
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            'Authorization': `Bearer ${user.token}`,
           },
         }
       )
@@ -104,8 +106,10 @@ function Home() {
         { _id: todoId, text },
         {
           headers: {
-            "Content-Type": "*",
-            Authorization: `Bearer ${user.token}`,
+            "Access-Control-Allow-Origin": "*",
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            'Authorization': `Bearer ${user.token}`,
           },
         }
       )
@@ -133,8 +137,10 @@ function Home() {
         { _id, isCompleted },
         {
           headers: {
-            "Content-Type": "*",
-            Authorization: `Bearer ${user.token}`,
+            "Access-Control-Allow-Origin": "*",
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            'Authorization': `Bearer ${user.token}`,
           },
         }
       )
@@ -169,10 +175,12 @@ function Home() {
         `${baseUrl}/todos/delete`,
         { _id },
         {
-          mode: 'no-cors',
+          mode: "no-cors",
           headers: {
-            "Content-Type": "*",
-            Authorization: `Bearer ${user.token}`,
+            "Access-Control-Allow-Origin": "*",
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            'Authorization': `Bearer ${user.token}`,
           },
         }
       )

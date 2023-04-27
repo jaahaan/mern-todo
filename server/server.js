@@ -10,11 +10,13 @@ const app = express()
 const PORT = process.env.PORT || 4000
 
 app.use(express.json())
-app.use(cors())
-// app.use((req, res, next) => {
-//     console.log(req.path, req.mothod)
-//     next()
-// })
+// app.use(cors())
+const corsOptions = {
+    origin: '*',
+    credentials: true,
+    optionSuccessStatus: 200
+}
+app.use(cors(corsOptions))
 
 //routes
 app.use('/api/user', userRoutes)

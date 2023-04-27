@@ -6,7 +6,7 @@ const baseUrl = "https://mern-todo-df8q.onrender.com"
 
 const getAllTodo = (token, setTodo, setLoadingTodo) => {
     axios
-    .get(`${baseUrl}/api/todos`, {
+    .get(`${baseUrl}/todos`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -19,7 +19,7 @@ const getAllTodo = (token, setTodo, setLoadingTodo) => {
 
 const getCompletedTodo = (token, setCompletedTodo) => {
     axios
-    .get(`${baseUrl}/api/todos/completed_todos`,
+    .get(`${baseUrl}/todos/completed_todos`,
     {
         headers: {
           Authorization: `Bearer ${token}`,
