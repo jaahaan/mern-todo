@@ -14,12 +14,7 @@ export const useRegister = () => {
   const register = async (username, email, password) => {
     setIsLoading(true);
     setError(null);
-    axios.post(`${baseUrl}/api/user/signup`, { username, email, password },
-    {
-      headers: {
-        "Content-Type": "application/json"
-      },
-    }).then((response) => {
+    axios.post(`${baseUrl}/api/user/signup`, { username, email, password }).then((response) => {
       localStorage.setItem("user", JSON.stringify(response.data));
       /** update the auth context */
       dispatch({ type: "LOGIN", payload: response.data });

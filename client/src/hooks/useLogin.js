@@ -11,12 +11,8 @@ export const useLogin = () => {
   const login = async ( email, password) => {
     setIsLoading(true);
     setError(null);
-    axios.post(`${baseUrl}/api/user/login`, { email, password },
-    {
-      headers: {
-        "Content-Type": "*",
-      },
-    }).then((response) => {
+    axios.post(`${baseUrl}/api/user/login`, { email, password }
+    ).then((response) => {
       localStorage.setItem("user", JSON.stringify(response.data));
 
       /** update the auth context */
