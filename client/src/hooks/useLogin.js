@@ -11,7 +11,7 @@ export const useLogin = () => {
   const login = async ( email, password) => {
     setIsLoading(true);
     setError(null);
-    axios.post(`${baseUrl}/api/user/login`, { email, password },
+    axios.post(`/api/user/login`, { email, password },
     {
       headers: {
         "Content-Type": "*",

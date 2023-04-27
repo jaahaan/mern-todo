@@ -14,7 +14,7 @@ export const useRegister = () => {
   const register = async (username, email, password) => {
     setIsLoading(true);
     setError(null);
-    axios.post(`${baseUrl}/api/user/signup`, { username, email, password },
+    axios.post(`/api/user/signup`, { username, email, password },
     {
       headers: {
         "Content-Type": "*",
