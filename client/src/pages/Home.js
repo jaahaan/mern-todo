@@ -26,7 +26,7 @@ function Home() {
   const [loadingTodo, setLoadingTodo] = useState(true);
   const { user } = useAuthContext();
   const toast = useToast();
-  const baseUrl =  "https://mern-todo-df8q.onrender.com"
+  const baseUrl = "https://mern-todo-df8q.onrender.com";
   // const baseUrl = "http://localhost:5000";
   const token = user.token;
   const inputReference = useRef(null);
@@ -195,10 +195,11 @@ function Home() {
   return (
     <VStack spacing="10px" className="container">
       <Container maxW="xl" centerContent>
-        <Text fontSize="3xl" mt={5} color="#58a6ff">
-          {/* Hello {user.user.username}!!! */}
-        </Text>
-
+        {user && (
+          <Text fontSize="3xl" mt={5} color="#58a6ff">
+            Hello {user.user.username}!!!
+          </Text>
+        )}
         <Box
           d="flex"
           justifyContent="center"
