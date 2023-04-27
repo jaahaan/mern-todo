@@ -54,7 +54,7 @@ function Home() {
     }
     axios
       .post(
-        `${baseUrl}/api/todos`,
+        `${baseUrl}/todos`,
         { text },
         {
           headers: {
@@ -100,7 +100,7 @@ function Home() {
 
     axios
       .post(
-        `${baseUrl}/api/todos/update`,
+        `${baseUrl}/todos/update`,
         { _id: todoId, text },
         {
           headers: {
@@ -129,7 +129,7 @@ function Home() {
   const handleCheck = (_id, isCompleted, setTodo, setCompletedTodo) => {
     axios
       .post(
-        `${baseUrl}/api/todos/mark_completed`,
+        `${baseUrl}/todos/mark_completed`,
         { _id, isCompleted },
         {
           headers: {
@@ -166,7 +166,7 @@ function Home() {
   const handleDelete = (_id, setTodo) => {
     axios
       .post(
-        `${baseUrl}/api/todos/delete`,
+        `${baseUrl}/todos/delete`,
         { _id },
         {
           mode: 'no-cors',

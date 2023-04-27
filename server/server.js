@@ -18,7 +18,7 @@ app.use(cors())
 
 //routes
 app.use('/api/user', userRoutes)
-app.use('/api/todos', todoRoutes)
+app.use('/todos', todoRoutes)
 
 
 mongoose
