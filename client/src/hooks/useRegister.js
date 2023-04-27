@@ -11,10 +11,10 @@ export const useRegister = () => {
   // const baseUrl =  "http://localhost:5000"
 
 
-  const register = async ( email, password) => {
+  const register = async (username, email, password) => {
     setIsLoading(true);
     setError(null);
-    axios.post(`${baseUrl}/api/user/signup`, { email, password }
+    axios.post(`${baseUrl}/api/user/signup`, {username, email, password }
     ).then((response) => {
       localStorage.setItem("user", JSON.stringify(response.data));
 
