@@ -169,6 +169,7 @@ function Home() {
         `${baseUrl}/api/todos/delete`,
         { _id },
         {
+          mode: 'no-cors',
           headers: {
             "Content-Type": "*",
             Authorization: `Bearer ${user.token}`,

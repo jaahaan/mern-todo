@@ -17,7 +17,7 @@ export const useRegister = () => {
     axios.post(`${baseUrl}/api/user/signup`, { username, email, password },
     {
       headers: {
-        "Content-Type": "application/json",
+        "Content-Type": "*",
       },
     }).then((response) => {
       localStorage.setItem("user", JSON.stringify(response.data));

@@ -14,7 +14,7 @@ export const useLogin = () => {
     axios.post(`${baseUrl}/api/user/login`, { email, password },
     {
       headers: {
-        "Content-Type": "application/json",
+        "Content-Type": "*",
       },
     }).then((response) => {
       localStorage.setItem("user", JSON.stringify(response.data));
