@@ -17,7 +17,7 @@ const getAllTodo = (token, setTodo, setLoadingTodo) => {
     })
 }
 
-const getCompletedTodo = (token, setCompletedTodo) => {
+const getCompletedTodo = (token, setCompletedTodo, setLoadingTodo) => {
     axios
     .get(`${baseUrl}/todos/completed_todos`,
     {
@@ -28,6 +28,7 @@ const getCompletedTodo = (token, setCompletedTodo) => {
     .then(({data}) => {
         console.log('data => ', data);
         setCompletedTodo(data)
+        setLoadingTodo(false)
     })
 }
 

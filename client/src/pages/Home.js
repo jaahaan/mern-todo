@@ -16,15 +16,17 @@ import axios from "axios";
 import { useEffect, useRef, useState } from "react";
 import Todo from "../components/Todo";
 import { useAuthContext } from "../hooks/useAuthContext";
-import { getAllTodo, getCompletedTodo } from "../utils/HandleApi";
+// import { getAllTodo, getCompletedTodo } from "../utils/HandleApi";
 function Home() {
   const [todo, setTodo] = useState([]);
   const [completedTodo, setCompletedTodo] = useState([]);
   const [text, setText] = useState("");
   const [isUpdating, setIsUpdating] = useState(false);
   const [todoId, setTodoId] = useState("");
+  const [deleteId, setDeleteId] = useState("");
   const [loadingTodo, setLoadingTodo] = useState(true);
   const [addingTodo, setAddingTodo] = useState(false);
+  // const [deletingTodo, setDeletingTodo] = useState(false);
 
   const { user } = useAuthContext();
   const toast = useToast();
@@ -36,11 +38,44 @@ function Home() {
   useEffect(() => {
     if (user) {
       setLoadingTodo(true);
-      getAllTodo(token, setTodo, setLoadingTodo);
-      getCompletedTodo(token, setCompletedTodo);
+      getAllTodo();
+      getCompletedTodo();
     }
   }, [user]);
 
+  const getAllTodo = () => {
+    axios
+      .get(`${baseUrl}/todos`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then(({ data }) => {
+        setTodo(data);
+        setLoadingTodo(false);
+        setAddingTodo(false);
+        setDeleteId("");
+        setText("");
+        setIsUpdating(false);
+      });
+  };
+
+  const getCompletedTodo = () => {
+    axios
+      .get(`${baseUrl}/todos/completed_todos`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then(({ data }) => {
+        console.log("data => ", data);
+        setCompletedTodo(data);
+        setDeleteId("");
+        setLoadingTodo(false);
+        setText("");
+        setIsUpdating(false);
+      });
+  };
   /** Add new Task */
   const addHandler = async () => {
     // e.preventDefault();
@@ -68,8 +103,7 @@ function Home() {
         }
       )
       .then((data) => {
-        setText("");
-        getAllTodo(token, setTodo, setLoadingTodo);
+        getAllTodo();
         toast({
           title: "Task Added!!!",
           status: "success",
@@ -77,7 +111,6 @@ function Home() {
           isClosable: true,
           position: "top",
         });
-        setAddingTodo(false);
       })
       .catch((err) => {
         console.log(err);
@@ -119,10 +152,8 @@ function Home() {
         }
       )
       .then((data) => {
-        setText("");
-        setIsUpdating(false);
-        getAllTodo(token, setTodo, setLoadingTodo);
-        getCompletedTodo(token, setCompletedTodo);
+        getAllTodo();
+        getCompletedTodo();
         toast({
           title: "Task Updated!!!",
           status: "success",
@@ -130,7 +161,6 @@ function Home() {
           isClosable: true,
           position: "top",
         });
-        setAddingTodo(false);
       })
       .catch((err) => {
         console.log(err);
@@ -139,7 +169,8 @@ function Home() {
   };
 
   /** Handle Todo Status */
-  const handleCheck = (_id, isCompleted, setTodo, setCompletedTodo) => {
+  const handleCheck = (_id, isCompleted) => {
+    setDeleteId(_id);
     axios
       .post(
         `${baseUrl}/todos/mark_completed`,
@@ -151,8 +182,8 @@ function Home() {
         }
       )
       .then((data) => {
-        getAllTodo(token, setTodo, setLoadingTodo);
-        getCompletedTodo(token, setCompletedTodo);
+        getAllTodo();
+        getCompletedTodo();
         if (isCompleted === true) {
           toast({
             title: "Task Completed!!!",
@@ -171,11 +202,14 @@ function Home() {
           });
         }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   /** Delete Task */
   const handleDelete = (_id, setTodo) => {
+    setDeleteId(_id);
     axios
       .post(
         `${baseUrl}/todos/delete`,
@@ -187,8 +221,8 @@ function Home() {
         }
       )
       .then((data) => {
-        getAllTodo(token, setTodo, setLoadingTodo);
-        getCompletedTodo(token, setCompletedTodo);
+        getAllTodo();
+        getCompletedTodo();
         toast({
           title: "Task Deleted!!!",
           status: "error",
@@ -197,7 +231,10 @@ function Home() {
           position: "top",
         });
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log(err);
+        setDeleteId("");
+      });
   };
 
   /** reset input field */
@@ -304,17 +341,41 @@ function Home() {
                 ) : todo.length > 0 ? (
                   <div>
                     {todo.map((item) => (
-                      <Todo
-                        key={item._id}
-                        time={item.updatedAt}
-                        text={item.text}
-                        isChecked={false}
-                        updateMode={() => updateMode(item._id, item.text)}
-                        deleteMode={() => handleDelete(item._id, setTodo)}
-                        checkMode={() =>
-                          handleCheck(item._id, true, setTodo, setCompletedTodo)
-                        }
-                      />
+                      <div key={item._id}>
+                        {deleteId === item._id ? (
+                          <Box
+                            d="flex"
+                            justifyContent="center"
+                            w="100%"
+                            style={{ marginTop: 16, padding: 21 }}
+                            borderRadius="lg"
+                            textAlign="center"
+                            bg="#3e4042"
+                          >
+                            <Spinner size="md" color="#fff" />
+                          </Box>
+                        ) : (
+                          // <div className="todo">
+                          //   <Spinner size="md" color="#fff" />
+                          // </div>
+                          <Todo
+                            key={item._id}
+                            time={item.updatedAt}
+                            text={item.text}
+                            isChecked={false}
+                            updateMode={() => updateMode(item._id, item.text)}
+                            deleteMode={() => handleDelete(item._id, setTodo)}
+                            checkMode={() =>
+                              handleCheck(
+                                item._id,
+                                true,
+                                setTodo,
+                                setCompletedTodo
+                              )
+                            }
+                          />
+                        )}
+                      </div>
                     ))}
                   </div>
                 ) : !loadingTodo ? (
@@ -343,22 +404,42 @@ function Home() {
                     {completedTodo.length > 0 ? (
                       <div>
                         {completedTodo.map((item) => (
-                          <Todo
-                            key={item._id}
-                            time={item.updatedAt}
-                            text={item.text}
-                            isChecked={true}
-                            updateMode={() => updateMode(item._id, item.text)}
-                            deleteMode={() => handleDelete(item._id, setTodo)}
-                            checkMode={() =>
-                              handleCheck(
-                                item._id,
-                                false,
-                                setTodo,
-                                setCompletedTodo
-                              )
-                            }
-                          />
+                          <div key={item._id}>
+                            {deleteId === item._id ? (
+                              <Box
+                                d="flex"
+                                justifyContent="center"
+                                style={{ marginTop: 16, padding: 21 }}
+                                w="100%"
+                                borderRadius="lg"
+                                textAlign="center"
+                                bg="#3e4042"
+                              >
+                                <Spinner size="md" color="#fff" />
+                              </Box>
+                            ) : (
+                              <Todo
+                                key={item._id}
+                                time={item.updatedAt}
+                                text={item.text}
+                                isChecked={true}
+                                updateMode={() =>
+                                  updateMode(item._id, item.text)
+                                }
+                                deleteMode={() =>
+                                  handleDelete(item._id, setTodo)
+                                }
+                                checkMode={() =>
+                                  handleCheck(
+                                    item._id,
+                                    false,
+                                    setTodo,
+                                    setCompletedTodo
+                                  )
+                                }
+                              />
+                            )}
+                          </div>
                         ))}
                       </div>
                     ) : (
