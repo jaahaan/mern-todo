@@ -24,6 +24,8 @@ function Home() {
   const [isUpdating, setIsUpdating] = useState(false);
   const [todoId, setTodoId] = useState("");
   const [loadingTodo, setLoadingTodo] = useState(true);
+  const [addingTodo, setAddingTodo] = useState(false);
+
   const { user } = useAuthContext();
   const toast = useToast();
   const baseUrl = "https://mern-todo-df8q.onrender.com";
@@ -42,7 +44,10 @@ function Home() {
   /** Add new Task */
   const addHandler = async () => {
     // e.preventDefault();
+    setAddingTodo(true);
+
     if (!text) {
+      setAddingTodo(false);
       toast({
         title: "Please Fill the Feild",
         status: "warning",
@@ -72,8 +77,12 @@ function Home() {
           isClosable: true,
           position: "top",
         });
+        setAddingTodo(false);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log(err);
+        setAddingTodo(false);
+      });
   };
 
   /** Set the task to be updated */
@@ -86,7 +95,9 @@ function Home() {
 
   /** Update Task */
   const updateHandler = () => {
+    setAddingTodo(true);
     if (!text) {
+      setAddingTodo(false);
       toast({
         title: "Please Fill the Feild",
         status: "warning",
@@ -119,8 +130,12 @@ function Home() {
           isClosable: true,
           position: "top",
         });
+        setAddingTodo(false);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log(err);
+        setAddingTodo(false);
+      });
   };
 
   /** Handle Todo Status */
@@ -230,12 +245,20 @@ function Home() {
               )}
             </div>
 
-            <div
-              className={`${text ? "button active" : "button"}`}
-              onClick={isUpdating ? () => updateHandler() : () => addHandler()}
-            >
-              {isUpdating ? <CheckIcon /> : <AddIcon />}
-            </div>
+            {addingTodo ? (
+              <div className="button">
+                <Spinner size="sm" />
+              </div>
+            ) : (
+              <div
+                className={`${text ? "button active" : "button"}`}
+                onClick={
+                  isUpdating ? () => updateHandler() : () => addHandler()
+                }
+              >
+                {isUpdating ? <CheckIcon /> : <AddIcon />}
+              </div>
+            )}
           </div>
         </Box>
 
