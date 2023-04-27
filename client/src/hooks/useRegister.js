@@ -7,27 +7,26 @@ export const useRegister = () => {
   const [isLoading, setIsLoading] = useState(null);
   const { dispatch } = useAuthContext();
 
-  const baseUrl =  "https://mern-todo-s3kz.onrender.com"
+  const baseUrl =  "https://mern-todo-df8q.onrender.com"
   // const baseUrl =  "http://localhost:5000"
 
 
-  const register = async (username, email, password) => {
+  const register = async ( email, password) => {
     setIsLoading(true);
     setError(null);
-    axios.post(`${baseUrl}/api/user/signup`, { username, email, password },
-    {headers: {
-      'Access-Control-Allow-Origin': '*',
-      Accept: 'application/json',
-      'Content-Type': 'application/json'
-    },}).then((response) => {
+    axios.post(`${baseUrl}/api/user/signup`, { email, password }
+    ).then((response) => {
       localStorage.setItem("user", JSON.stringify(response.data));
+
       /** update the auth context */
       dispatch({ type: "LOGIN", payload: response.data });
+
       setIsLoading(false);
-    }).catch((error) => {
-        setIsLoading(false);
-        setError(error.response.data.error);
+    }).catch(error => {
+      setIsLoading(false);
+      setError(error.response.data.error);
     });
+  
   };
   return { register, isLoading, error };
 };

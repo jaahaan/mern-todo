@@ -26,7 +26,7 @@ function Home() {
   const [loadingTodo, setLoadingTodo] = useState(true);
   const { user } = useAuthContext();
   const toast = useToast();
-  const baseUrl = "https://mern-todo-s3kz.onrender.com";
+  const baseUrl =  "https://mern-todo-df8q.onrender.com"
   // const baseUrl = "http://localhost:5000";
   const token = user.token;
   const inputReference = useRef(null);
@@ -58,10 +58,8 @@ function Home() {
         { text },
         {
           headers: {
-            "Access-Control-Allow-Origin": "*",
-            Accept: "application/json",
-            "Content-Type": "application/json",
-            'Authorization': `Bearer ${user.token}`,
+            "Content-Type": "*",
+            Authorization: `Bearer ${user.token}`,
           },
         }
       )
@@ -106,10 +104,8 @@ function Home() {
         { _id: todoId, text },
         {
           headers: {
-            "Access-Control-Allow-Origin": "*",
-            Accept: "application/json",
-            "Content-Type": "application/json",
-            'Authorization': `Bearer ${user.token}`,
+            "Content-Type": "*",
+            Authorization: `Bearer ${user.token}`,
           },
         }
       )
@@ -137,10 +133,8 @@ function Home() {
         { _id, isCompleted },
         {
           headers: {
-            "Access-Control-Allow-Origin": "*",
-            Accept: "application/json",
-            "Content-Type": "application/json",
-            'Authorization': `Bearer ${user.token}`,
+            "Content-Type": "*",
+            Authorization: `Bearer ${user.token}`,
           },
         }
       )
@@ -175,12 +169,9 @@ function Home() {
         `${baseUrl}/todos/delete`,
         { _id },
         {
-          mode: "no-cors",
           headers: {
-            "Access-Control-Allow-Origin": "*",
-            Accept: "application/json",
-            "Content-Type": "application/json",
-            'Authorization': `Bearer ${user.token}`,
+            "Content-Type": "*",
+            Authorization: `Bearer ${user.token}`,
           },
         }
       )
